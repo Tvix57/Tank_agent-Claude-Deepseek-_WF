@@ -1,0 +1,27 @@
+---
+schema: 1
+name: server_bag_deferred_fixes.md
+type: project
+title: Отложенные исправления BagUserComponent (найдены при первичном анализе 2026-10-13) — напомнить при новой задаче по сумке
+source: .claude/memory/server_bag_deferred_fixes.md
+claude: |
+  name: server-bag-deferred-fixes
+  description: Отложенные исправления BagUserComponent (найдены при первичном анализе 2026-10-13) — напомнить при новой задаче по сумке
+  metadata:
+    type: project
+---
+
+Док: `/workspace/server/.claude/docs/bag-architecture.md#tradeoffs`, ГДД — `game-design/bag-gdd.md`.
+Ничего не чинилось, решений по фиксам нет. Приоритет:
+1. `dbMappingChildBuild` — `(BagItem)` без проверки: документ `t = 3` (стенды koba/collection) и `t >= 4`
+   роняют загрузку. Вариант: чистить данные стендов или пропускать при загрузке.
+2. Ресурс, потраченный до 0, при следующем `add` получает вторую запись с тем же id — фикс зависит от
+   открытого вопроса ГДД «ресурс с нулём остаётся или исчезает».
+3. Минус не запрещён самим `addResource` (правило ГДД держится на проверках вызывающих); два пути
+   начисления `add`/`addResource`.
+4. Hangar/Aerodrome не проверяют результат `add` → NPE после удаления старой техники.
+5. Документация: в `/workspace/server/.claude/docs/tank-airplane-data-architecture.md` устарела строка про BagItem
+   (выявлено при документировании сумки) — поправить при следующем обновлении того дока.
+
+**Why:** пользователь запросил только документацию. **How to apply:** при задаче по сумке напомнить
+и предложить починить, начиная с п.1. Связано: [[server-codex-deferred-fixes]].

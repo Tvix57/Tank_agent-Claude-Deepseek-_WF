@@ -1,0 +1,115 @@
+- [Реестр документации client+server](component_docs_registry.md) — компонент → док, статус, дата; ведут *-librarian-lead
+- [Покрытие кода сканированием](./../docs/source-scan-coverage.md) — % прочитанных файлов; ведут *-librarian-lead
+- [Баги областей без документации](./../docs/undocumented-areas-known-bugs.md) — для библиотекарей
+- [Серия оптимизации документов](project_docs_optimization_series.md) — следующий только после одобрения
+- [Модели агентов по ролям](project_agent_model_assignment.md) — haiku/sonnet/opus/fable
+- [Личная память агентов](./../docs/agent-memory.md) — memory: local, кроме *-lead
+- [Субагенты без AskUserQuestion](reference_subagents_no_ask_user.md) — ВОПРОСЫ через базовую сессию
+- [Лимит 20 субагентов](reference_subagent_concurrency_limit.md) — волнами, библиотекаря синхронно
+- [Скиллы naming, glossary, writing-for-agents](reference_naming_skill.md) — в server симлинки
+- [Глоссарий](./../docs/glossary.md) — при выборе английского слова
+- [Web-рекомендации client](./../docs/web-recommendations/README.md) — пишет только web-librarian
+- [Правило: агенты отвечают на русском](feedback_agents_russian_only.md)
+- [Правило: файлы-инструменты не в git](feedback_no_git_dependency_tooling_files.md) — .git/info/exclude
+- [Правило: удаление разделов бэклога](feedback_backlog_section_removal.md) — пункты уже в трекере, сквозные не дублировать
+- [Правило: одно правило ГДД — одна функция](feedback_gdd_function_mapping.md)
+- [Правило: «как в коде» против ТЗ — в #gdd-log](feedback_gdd_log_code_over_tz.md)
+- [Правило: без неявного порядка вызовов](feedback_no_implicit_call_order.md)
+- [Правило: имена и рефакторинг — разные этапы](feedback_naming_separate_from_refactor.md)
+- [Client: без развёрнутых комментариев в .ts](feedback_no_verbose_ts_comments.md)
+- [Client: паковка ассетов](client_asset_packaging_docs.md)
+- [Client: подписка на push-события](../docs/server-push-events-subscription.md) — GameEvents.listenServerEvents
+- [Client: очередь попапов](./../docs/popup-queue-pattern.md)
+- [Client: ItemsPresets](./../docs/items-presets-architecture.md) — отрисовка BagItem
+- [Client: RewardFlightUtils](./../docs/reward-flight-utils-architecture.md) — полёт награды и удержание
+- [Client: PanelsPresets и ButtonPresets](./../docs/panels-buttons-presets-architecture.md) — фон и кнопка
+- [Client: паттерны наград, таймеров, сеток, полёта иконок](./../docs/client-ui-patterns.md) — auto-create 2026-10-27, лутбоксы
+- [Server: без рефлексии](feedback_no_reflection_server.md)
+- [Server: без развёрнутых javadoc](feedback_no_verbose_java_comments.md)
+- [Server: границы персистентности в Strategy](feedback_server_db_persistence_boundary.md) — спросить пользователя
+- [Server: миграция индекса MongoDB сразу](feedback_server_mongo_index_migration.md)
+- [Server: проверка сборки через javac](reference_server_build_check.md)
+- [Server: новый BagItem/Component/Page](server_new_bagitem_component_page_draft.md) — при новой сущности
+- [ГДД] [Коллекции](./../docs/game-design/collections-gdd.md)
+- [Коллекции] [client-док](./../docs/collections-architecture.md)
+- [Коллекции] [server-док](server_collections_architecture.md) — открыто ClassCastException t=3
+- [Коллекции] [Контекст и стиль работы](client_collection_section_hierarchy_draft.md)
+- [Коллекции] [Решения 2026-10-05](server_collections_fix_decisions_2026_10_05.md) — реализовано
+- [Коллекции] [Кандидаты рефакторинга](project_collections_refactor_candidates.md) — миграция notified
+- [Коллекции] [План рефакторинга событий](project_collections_events_refactor_plan.md) — реализован
+- [Коллекции] [План: события шлёт сервер](project_collections_server_push_plan.md) — не закоммичен
+- [Коллекции] [server: отложенные рефакторы](server_collections_deferred_fixes.md) — при новой секции; ItemType COLLECTION_ITEM=6 после amnesia/fix
+- [ГДД] [Сумка](./../docs/game-design/bag-gdd.md)
+- [Сумка] [client-док](./../docs/bag-architecture.md)
+- [Сумка] [server-док](/workspace/server/.claude/docs/bag-architecture.md)
+- [Сумка] [client: отложенное](client_bag_deferred_fixes.md)
+- [Сумка] [server: отложенное](server_bag_deferred_fixes.md) — ClassCastException t=3
+- [ГДД] [Поезд](./../docs/game-design/train-gdd.md)
+- [Поезд] [client-док](./../docs/train-architecture.md)
+- [Поезд] [server-док](/workspace/server/.claude/docs/train-architecture.md)
+- [Поезд] [Отложенное client+server](train_deferred_fixes.md) — автопризыв продаёт при свободной позиции
+- [ГДД] [Достижения](./../docs/game-design/achievements-gdd.md)
+- [Достижения] [client-док](./../docs/achievements-architecture.md)
+- [Достижения] [server-док](server_achievements_architecture_draft.md)
+- [Достижения] [client: отложенное](client_achievements_deferred_fixes.md)
+- [Достижения] [server: отложенное](server_achievements_deferred_fixes.md)
+- [ГДД] [Сборка](./../docs/game-design/assembly-gdd.md)
+- [Сборка] [client-док](./../docs/assembly-architecture.md)
+- [Сборка] [server-док](server_assembly_architecture.md)
+- [Сборка] [client: отложенное](client_assembly_deferred_fixes.md) — падение окна при ошибке /take
+- [Сборка] [server: отложенное](server_assembly_deferred_fixes.md)
+- [ГДД] [AirDrop](./../docs/game-design/airdrop-gdd.md)
+- [AirDrop] [client-док](./../docs/airdrop-architecture.md)
+- [AirDrop] [server-док](server_airdrop_architecture.md)
+- [AirDrop] [client: отложенное](client_airdrop_deferred_fixes.md) — ящика нет после самолёта
+- [AirDrop] [server: отложенное](server_airdrop_deferred_fixes.md)
+- [ГДД] [Кампания](./../docs/game-design/campaign-gdd.md)
+- [Кампания] [client-док](./../docs/campaign-architecture.md)
+- [Кампания] [Отложенное client+server](campaign_deferred_fixes.md) — эмуляция без лимита
+- [ГДД] [Квесты](./../docs/game-design/quests-gdd.md) — награда настраиваемая (с 2026-10-27; градация 3/2/1 убрана), задания 5–7 отключены; клиентского дока нет
+- [Квесты] [server-док](server_quests_architecture.md)
+- [Квесты] [server: отложенное](server_quests_deferred_fixes.md) — повторная выдача награды
+- [Туториал] [client-док](./../docs/tutorial-architecture.md) — статус «остатки», ГДД нет
+- [Туториал] [server-док](server_tutorial_architecture.md)
+- [Туториал] [client: отложенное](client_tutorial_deferred_fixes.md) — шаги 0/1 после merge
+- [Туториал] [server: отложенное](server_tutorial_deferred_fixes.md) — переход через ||
+- [Туториал] [Задания — для будущего ГДД](project_quests_tutorial_gdd_note.md)
+- [ГДД] [Лутбоксы](./../docs/game-design/lootbox-gdd.md) — из файла пользователя «Задания поезда и генералы.pdf», 2026-10-27; открытые вопросы в #gdd-open
+- [Лутбоксы] [server-док](/workspace/server/.claude/docs/lootbox-architecture.md) — по итогам разработки, 2026-10-28
+- [Лутбоксы] [client-док](./../docs/lootbox-architecture.md) — по итогам разработки, 2026-10-29
+- [Лутбоксы] [client: отложенное](client_lootbox_deferred_fixes.md) — итог ревью 2026-11-04: что исправлено, что закрыто, что открыто (P3-25…29, P2-13); общая анимация после слияния koba/collection
+- [ГДД] [Магazин и офферы](./../docs/game-design/shop-gdd.md) — черновик, правила не подтверждены
+- [Магазин] [client-док](./../docs/shop-architecture.md)
+- [Магазин] [Отложенное client+server](shop_deferred_fixes.md) — ЮKassa, двойная выдача
+- [Кодекс] [client-док](./../docs/codex-architecture.md) — ГДД не создавать (решение 2026-10-13)
+- [Кодекс] [server-док](server_codex_architecture_docs.md)
+- [Кодекс] [server: отложенное](server_codex_deferred_fixes.md) — дубли, баг в проде; fix мог закрыть
+- [Балансовые данные] [server: TankData и AirplaneData](server_tank_airplane_data_architecture.md)
+- [Балансовые данные] [server: баг TankData](server_tank_data_deferred_fixes.md)
+- [Профиль] [Уровень игрока — для будущего ГДД](project_profile_account_level_note.md)
+- [Бой] [Аэродром] [Статус ТЗ, Battlefield, детерминизм](project_battle_air_followups.md) — Д1–Д5 отложены
+- [ГДД] [Ангар](./../docs/game-design/hangar-gdd.md)
+- [Ангар] [client-док](./../docs/hangar-architecture.md)
+- [Ангар] [Отложенное client+server](hangar_deferred_fixes.md) — слот-«сирота» на сервере
+- [ГДД] [Бой](./../docs/game-design/battle-gdd.md) — ТЗ — цель, частично как в коде
+- [Бой] [client-док движка и наземного боя](./../docs/battle-architecture.md)
+- [Бой] [client-док воздушного боя](./../docs/air-battle-architecture.md)
+- [Бой] [server-док](/workspace/server/.claude/docs/battle-architecture.md)
+- [Бой] [Отложенное и нереализованные правила](battle_deferred_fixes.md) — урон в окне авиаудара
+- [ГДД] [Аэродром](./../docs/game-design/aerodrome-gdd.md) — сокращён, призыв — в ГДД военной базы
+- [Аэродром] [client-док](./../docs/aerodrome-architecture.md)
+- [Аэродром] [server-док](/workspace/server/.claude/docs/aerodrome-architecture.md)
+- [Аэродром] [Отложенное client+server](aerodrome_deferred_fixes.md) — рамка радиовышки
+- [Военная база] [server-док](reference_military_base_architecture.md) — auto-create, ГДД [military-base-gdd.md](./../docs/game-design/military-base-gdd.md) (2026-10-22)
+- [Военная база] [server: отложенное](server_military_base_deferred_fixes.md) — бесплатный бустер /summonAccept, /skipBuilding
+- [Военная база] [client-док](./../docs/military-base-architecture.md) — auto-create (по коду, 2026-10-22)
+- [Военная база] [client: отложенное](military_base_deferred_fixes.md) — деление на 0, /takeProfit без проверки; визуальные 2.9/2.4
+- [ГДД] [Военная база](./../docs/game-design/military-base-gdd.md) — из файлов пользователя, 2026-10-22; открытые вопросы в #gdd-open
+- [ГДД] [Почта](./../docs/game-design/mailbox-gdd.md) — черновик по коду
+- [Почта] [client-док](./../docs/mailbox-architecture.md)
+- [Почта] [Отложенное client+server](mailbox_deferred_fixes.md) — письмо о бане, init() на сервере
+- [ГДД] [Бан-панель](./../docs/game-design/ban-gdd.md) — как в коде
+- [Бан-панель] [client-док](./../docs/ban-architecture.md)
+- [Бан-панель] [server-док](/workspace/server/.claude/docs/ban-architecture.md)
+- [Бан-панель] [Отложенное client+server](ban_deferred_fixes.md) — всё отложено; серверная проверка наказаний
+- [ГДД] [Интеграции: ярлык игры](./../docs/game-design/platform-sdk-gdd.md) — из файла пользователя, 2026-10-26; открытые вопросы в #gdd-open; архитектуры нет

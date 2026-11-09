@@ -1,0 +1,1 @@
+/workspace/client/.claude/scripts/scan_coverage.py

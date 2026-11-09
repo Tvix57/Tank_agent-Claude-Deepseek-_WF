@@ -1,0 +1,13 @@
+# Схема `.deepseek` — временная страховка на случай блокировки Claude Code.
+# Машинный файл: обновляет convert.py при export.
+schema: 1
+layout: .deepseek
+engine: deepseek
+generated_by: .deepseek/scripts/convert.py (версия 1.0)
+converted_at: 2026-11-06 11:22:08 +0000
+source_layout: .claude
+description: >-
+  Зеркало `.claude`: инструкции, агенты, скиллы, документация и память проекта для
+  продолжения работы в DeepSeek Harness (dsh), когда Claude Code недоступен.
+repositories:
+  - server

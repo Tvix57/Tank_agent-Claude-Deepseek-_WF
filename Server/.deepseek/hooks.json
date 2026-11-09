@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "note": "Сгенерировано из .claude/settings.local.json. Поддержку хуков в dsh проверять отдельно — см. .deepseek/instructions/runtime.md#hooks.",
+  "events": [
+    {
+      "event": "pre_compact",
+      "matcher": "manual",
+      "type": "command",
+      "command": "echo 'Через мгновение произойдёт сжатие контекста (PreCompact). Если сейчас есть незафиксированные важные детали активной документации — .claude/memory/*.md/MEMORY.md (/workspace/client) и .claude/docs/*.md (/workspace/client, /workspace/server) — по возможности зафиксируй их сейчас, до потери деталей. Гарантированная проверка всё равно произойдёт сразу после сжатия (SessionStart).'"
+    },
+    {
+      "event": "pre_compact",
+      "matcher": "auto",
+      "type": "command",
+      "command": "echo 'Через мгновение произойдёт сжатие контекста (PreCompact). Если сейчас есть незафиксированные важные детали активной документации — .claude/memory/*.md/MEMORY.md (/workspace/client) и .claude/docs/*.md (/workspace/client, /workspace/server) — по возможности зафиксируй их сейчас, до потери деталей. Гарантированная проверка всё равно произойдёт сразу после сжатия (SessionStart).'"
+    },
+    {
+      "event": "session_start",
+      "matcher": "compact",
+      "type": "command",
+      "command": "echo 'Контекст только что был сжат (авто/ручной /compact). Прежде чем продолжать: проверь, не устарела ли активная документация проекта — .claude/memory/*.md и MEMORY.md в /workspace/client/.claude/memory/, а также .claude/docs/*.md в /workspace/client и /workspace/server. Если детали недавней работы туда не попали, устарели или их можно сократить — обнови, дополни или почисти перед продолжением задачи.'"
+    }
+  ]
+}

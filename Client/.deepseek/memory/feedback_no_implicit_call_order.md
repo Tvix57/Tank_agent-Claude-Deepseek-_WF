@@ -1,0 +1,17 @@
+---
+schema: 1
+name: feedback_no_implicit_call_order.md
+type: feedback
+title: Без неявного порядка вызовов — переход состояния одним методом у объекта-владельца (правило для аналитиков, разработчиков и базовой сессии)
+source: .claude/memory/feedback_no_implicit_call_order.md
+claude: |
+  name: feedback-no-implicit-call-order
+  description: Без неявного порядка вызовов — переход состояния одним методом у объекта-владельца (правило для аналитиков, разработчиков и базовой сессии)
+  metadata:
+    type: feedback
+---
+
+Корректность не должна зависеть от того, что вызывающий выполняет шаги над состоянием другого объекта в определённом порядке (снять флаг → вызвать сеттер). Переход состояния — один публичный метод у владельца, который сам делает все шаги и проверяет предусловия.
+
+**Why:** 2026-10-05 пользователь заметил, что `CollectionItemEntry.setStars` не проверяет `DELETED` и корректен лишь потому, что `Collection.addItem` снимает флаг строкой выше; сказал «неявного порядка не должно быть». Заменено на `CollectionItemEntry.updateState(Stars)`; обратный переход — `markDeleted()` (`Collection.consumeItems` переименован в `removeAllItems`, флаги напрямую больше не ставит).
+**How to apply:** первоисточник — `agent-system-workflow.md#no-implicit-order` (client и server); короткие ссылки во всех 15 analyst/developer агентах. Аналитики — обязательная находка в анализе; разработчики — не писать такой код. Связано с [[feedback-gdd-function-mapping]].
