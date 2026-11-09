@@ -64,3 +64,4 @@
 | 2026-11-06 11:19:45 +0000 | export | снимок .claude -> .deepseek | {"agents": 31, "skills": 4, "docs": 55, "memory": 65} |
 | 2026-11-06 11:21:14 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
 | 2026-11-06 11:22:08 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
+| 2026-11-09 12:29:10 +0700 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |

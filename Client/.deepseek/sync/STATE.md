@@ -22,6 +22,22 @@
 - ГДД `generals-gdd.md`: уточнено, что клиентской архитектуры ещё нет; серверная ссылается на ГДД
   через `.claude`-путь с оговоркой про `.deepseek`-раскладку.
 
+## Осознанная дельта 2026-11-09: генералы остаются в `.deepseek`
+
+Область «Генералы и Ставка армии» заведена в DeepSeek 2026-11-06 и в `.claude` пока **не переносится** —
+решение Пользователя 2026-11-09. Потерь при переносе инструкций в папку WF не было: этих файлов в `.claude`
+не было изначально.
+
+- Файлы дельты: `agents/analysts/client-analyst-generals.md`, `agents/developers/client-developer-generals.md`,
+  `docs/game-design/generals-gdd.md`, `docs/generals-architecture.md`, `agent-memory-local/*-generals/`.
+- `import` для них **не запускать**, пока Пользователь не решит иначе: он создаст эти файлы в `.claude`.
+- Следствия, которые поломкой не считать: `convert.py check` → `new 2`; `convert.py drift` →
+  «снимок отстал: 2»; `preflight.py` пункт 1 (свежесть снимка) → БЛОК на всё время дельты.
+- `export --force` дельту не удаляет: снимок только копирует `.claude` → `.deepseek`, лишнее не чистит.
+- `.claude/agents/analysts/client-analyst-lead.md` (ро̀стер) ссылается на `client-analyst-generals`,
+  которого в `.claude` пока нет: так и задумано, запись опережает агентов (решение Пользователя
+  2026-11-09). Ссылку не снимать и висячей ссылкой не считать.
+
 ## Журнал
 
 | Когда | Команда | Что | Счётчики |
@@ -64,3 +80,5 @@
 | 2026-11-06 11:19:45 +0000 | export | снимок .claude -> .deepseek | {"agents": 31, "skills": 4, "docs": 55, "memory": 65} |
 | 2026-11-06 11:21:14 +0000 | export | снимок .claude -> .deepseek | {"agents": 31, "skills": 4, "docs": 55, "memory": 65} |
 | 2026-11-06 11:22:08 +0000 | export | снимок .claude -> .deepseek | {"agents": 31, "skills": 4, "docs": 55, "memory": 65} |
+| 2026-11-09 12:26:06 +0700 | export | снимок .claude -> .deepseek | {"agents": 31, "skills": 4, "docs": 55, "memory": 65} |
+| 2026-11-09 12:26:42 +0700 | export | снимок .claude -> .deepseek | {"agents": 31, "skills": 4, "docs": 55, "memory": 65} |

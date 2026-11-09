@@ -4,10 +4,10 @@ schema: 1
 layout: .deepseek
 engine: deepseek
 generated_by: .deepseek/scripts/convert.py (версия 1.0)
-converted_at: 2026-11-06 11:22:08 +0000
+converted_at: 2026-11-09 12:26:42 +0700
 source_layout: .claude
 description: >-
   Зеркало `.claude`: инструкции, агенты, скиллы, документация и память проекта для
   продолжения работы в DeepSeek Harness (dsh), когда Claude Code недоступен.
 repositories:
-  - client
+  - Client

@@ -103,8 +103,11 @@ def check(root):
             problems.append("#7 bridge.md без инструмента `%s`" % tool)
 
     # 8. convert.py/selftest.py симметричны между репозиториями
-    sibling = repo.parent / ("server" if repo.name == "client" else "client")
-    if sibling.is_dir():
+    # Имена каталогов различаются (`client`/`server` в рабочем каталоге, `Client`/`Server` в WF-папке),
+    # поэтому сосед ищется без учёта регистра.
+    names = ("server", "Server") if repo.name.lower() == "client" else ("client", "Client")
+    sibling = next((repo.parent / name for name in names if (repo.parent / name).is_dir()), None)
+    if sibling is not None:
         for name in ("convert.py", "selftest.py"):
             mine, other = dz / "scripts" / name, sibling / ".deepseek/scripts" / name
             if other.is_file() and mine.read_bytes() != other.read_bytes():
@@ -130,10 +133,13 @@ def check(root):
     # Решение Пользователя 2026-11-06: `.deepseek/` под git, `.claude/` под git — восстановление
     # рабочих файлов идёт по фалам с ревью, поэтому исключения нет. Требуется только AGENTS.md:
     # он генерируется конвертером и не должен попадать в историю.
-    exclude = read(repo / ".git/info/exclude")
-    for pattern in EXCLUDE_PATTERNS:
-        if not any(line.strip() == pattern for line in exclude.split("\n")):
-            problems.append("#12 .git/info/exclude без строки `%s` (контур попадёт в git status)" % pattern)
+    # Контур может лежать вне рабочего репозитория (WF-папка вне контейнера, `/wf/Client`): git-корня
+    # рядом нет, исключение настраивается в рабочем каталоге (`/workspace/client`) — здесь проверять нечего.
+    if (repo / ".git").exists():
+        exclude = read(repo / ".git/info/exclude")
+        for pattern in EXCLUDE_PATTERNS:
+            if not any(line.strip() == pattern for line in exclude.split("\n")):
+                problems.append("#12 .git/info/exclude без строки `%s` (контур попадёт в git status)" % pattern)
 
     # 13. скрипты контура: компилируются и считают токены на синтетическом журнале dsh
     problems.extend(check_dsh_scripts(repo))
