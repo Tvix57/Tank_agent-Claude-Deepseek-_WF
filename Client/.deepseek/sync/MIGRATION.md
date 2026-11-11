@@ -6,7 +6,7 @@ DeepSeek?**
 | Режим | Когда | Что можно | Что меняется в git |
 |---|---|---|---|
 | **A. Сторож** | Claude Code работает, `.deepseek` только держится свежим | ничего, только `export`/`drift` | `.deepseek` (при желании — один коммит «снимок») |
-| **B. Мост** | Claude Code недоступен, менять нужно только документацию, память, агентов, скиллы | `docs/`, `memory/`, `.deepseek/*` | ветка `<ветка>-deepseek`, затем `import` обратно |
+| **B. Мост** | Claude Code недоступен, менять нужно только документацию, память, агентов, скиллы | `.deepseek/docs/`, `.deepseek/memory/`, `.deepseek/*` | ветка `<ветка>-deepseek`, затем `import` обратно |
 | **C. Замена** | Claude Code недоступен надолго, нужно менять и код | всё, но сборка и проверка — своими командами | отдельная ветка; возврат через merge (см. ниже) |
 
 Почему код — только режим C: конвертер переносит `.claude`-раскладку, а не изменения в `src/`/`game/`.
@@ -40,7 +40,7 @@ python3 .deepseek/scripts/convert.py export && python3 .deepseek/scripts/convert
    ```
    Работать в той же ветке, что была в Claude Code (`lastBranch`), но копией — иначе ветка сломает
    сборку для тех, у кого Claude Code работает.
-3. Открыть dsh в корне репозитория, первое сообщение — `instructions/checkpoint.md`.
+3. Открыть dsh в корне репозитория, первое сообщение — `.deepseek/instructions/checkpoint.md`.
 4. Работать. Правила: `.deepseek/instructions/rules.md`. Документацию писать в `.deepseek/docs/`, память —
    в `.deepseek/memory/` и `.deepseek/agent-memory-local/`, заметки о решениях — `.deepseek/notes/`.
 5. Коммиты — обычные, в ветку `<ветка>-deepseek`. Пересобрать репозиторий — стандартными командами
@@ -53,7 +53,7 @@ python3 .deepseek/scripts/convert.py export && python3 .deepseek/scripts/convert
    python3 .deepseek/scripts/convert.py check      # что разошлось
    python3 .deepseek/scripts/convert.py import     # .deepseek -> .claude
    ```
-   `import` переносит документы и память, чинит `hooks.json`/`state`, не трогает код и агентов, которые в
+   `import` переносит документы и память, чинит `.deepseek/hooks.json`/`.deepseek/state`, не трогает код и агентов, которые в
    `.claude` уже есть. Конфликты («расхождение, файл оставлен как в .claude») разбираются по одному:
    - документ в `.deepseek` свежее — `import --force` для этого файла или правка руками;
    - в `.claude` новее — удалить `.deepseek`-копию (`export --force` вернёт актуальную).

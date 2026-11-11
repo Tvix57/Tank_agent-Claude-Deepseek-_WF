@@ -19,16 +19,16 @@
 
 | Тема | Claude Code | dsh | Что делать |
 |---|---|---|---|
-| Инструкции подкаталога | `CLAUDE.md` в подкаталоге; `.claude/*` подхватывается | `AGENTS.md` в корне; подкаталоги читаются не всегда | `CLAUDE.ds.md` и `instructions/` читать явно (checkpoint) |
+| Инструкции подкаталога | `CLAUDE.md` в подкаталоге; `.claude/*` подхватывается | `AGENTS.md` в корне; подкаталоги читаются не всегда | `.deepseek/CLAUDE.ds.md` и `.deepseek/instructions/` читать явно (checkpoint) |
 | Субагенты | `Agent` tool, `subagent_type` | `task`, тип = имя агента | вызывать по файлу `.deepseek/agents/...`, инструменты агента — из `traits`; `subagent_type` и `run_in_background` в dsh нет — фоновый запуск не заменяет ожидание результата |
-| Контекст субагента | `CLAUDE.md` + `.claude/` подхватываются | инструкции проекта в контекст субагента не попадают | каждая задача — по шаблону `instructions/rules.md#субагенты`: файл агента, якорь WF полным путём, «ответ по-русски», `ВОПРОСЫ` полем, синхронный вызов |
+| Контекст субагента | `CLAUDE.md` + `.claude/` подхватываются | инструкции проекта в контекст субагента не попадают | каждая задача — по шаблону `.deepseek/instructions/rules.md#subagents`: файл агента, якорь WF полным путём, «ответ по-русски», `ВОПРОСЫ` полем, синхронный вызов |
 | Скиллы | `Skill` tool | плагин skill | читать `SKILL.md` через `read` перед работой |
 | Память | `memory: local`, авто-индекс | нет автоматического индекса | `MEMORY.md` читать самому в начале вызова, как в `.claude/docs/agent-memory.md` |
-| Хуки | `settings.local.json` | `hooks.json`, поддержка плагином | считать, что напоминаний нет; чек-лист в `instructions/checkpoint.md` |
+| Хуки | `settings.local.json` | `.deepseek/hooks.json`, поддержка плагином | считать, что напоминаний нет; чек-лист в `.deepseek/instructions/checkpoint.md` |
 | Планировщик | `CronCreate` (живёт в сессии) | `schedule` | при сомнении — ручной запуск `token_usage_check_dsh.py` (runtime.md#tokens) |
 | Контроль токенов | `CronCreate` + `.claude/scripts/token_usage_check.py` (читает `~/.claude/projects/`) | `token_usage_check_dsh.py` (читает журнал dsh) | пороги те же, но нужен `--sessions-root`; zstd-журнал требует модуля `zstandard` |
-| Модели | opus/sonnet/haiku | `deepseek-v4-pro`/`deepseek-flash` | таблица `instructions/bridge.md#модели` |
-| Контекст | `/compact`, PreCompact-хук | автоматическое `compaction` | фиксировать состояние в `memory/` и `docs/` до и после сжатия |
+| Модели | opus/sonnet/haiku | `deepseek-v4-pro`/`deepseek-flash` | таблица `.deepseek/instructions/bridge.md#модели` |
+| Контекст | `/compact`, PreCompact-хук | автоматическое `compaction` | фиксировать состояние в `.deepseek/memory/` и `.deepseek/docs/` до и после сжатия |
 | Безопасность правок | `PreToolUse`-хуки, разрешения | политика подтверждений | подтверждения не обходить; запреты из `AGENTS.md` действуют |
 | Зависимости | ставит Claude Code по согласованию | может поставить `npm install`/`mvn` сам | сборка — только командами проекта (`npm run build`, `server/scripts/build.sh`) |
 

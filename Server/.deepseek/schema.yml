@@ -4,7 +4,7 @@ schema: 1
 layout: .deepseek
 engine: deepseek
 generated_by: .deepseek/scripts/convert.py (версия 1.0)
-converted_at: 2026-11-09 12:29:10 +0700
+converted_at: 2026-11-11 05:24:21 +0000
 source_layout: .claude
 description: >-
   Зеркало `.claude`: инструкции, агенты, скиллы, документация и память проекта для

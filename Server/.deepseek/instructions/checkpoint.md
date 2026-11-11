@@ -4,28 +4,22 @@
 
 ---
 
-Прочитай целиком, прежде чем что-то делать:
+Прочитай целиком, прежде чем что-то делать (правила не пересказаны здесь — только где они лежат):
 
-1. `AGENTS.md` в корне — правила проекта (это копия `CLAUDE.md`).
-2. `.deepseek/instructions/project.md` — те же правила в терминах `.deepseek`, плюс запрет на правку
-   `.claude` в DeepSeek-режиме.
-3. `.deepseek/instructions/rules.md` — язык, вопросы, противоречия, память, субагенты.
+1. `AGENTS.md` в корне — правила проекта (сгенерированная копия `CLAUDE.md`).
+2. `.deepseek/instructions/project.md` — те же правила в терминах `.deepseek`; расхождений с `AGENTS.md`
+   быть не может (оба выводятся из `CLAUDE.md`).
+3. `.deepseek/instructions/rules.md` — DeepSeek-часть: субагенты, скиллы, память, токены, запреты.
 4. `.deepseek/instructions/contracts.md` — форматы памяти, документации, субагентов и скиллов.
 5. `.deepseek/instructions/bridge.md` — карта `.claude` ↔ `.deepseek` (что чем заменяется).
 6. `.deepseek/docs/agent-system-workflow.md` — только если задача входит в пайплайн команд.
-7. `.deepseek/state/session_state.json` — `lastBranch`; сравни с текущей git-веткой. Ветка другая —
-   уточни тип задачи (новая фича / расширение / баг), потом обнови `lastBranch`.
+7. `.deepseek/state/session_state.json` — `lastBranch`; что с ним делать (сверка с git-веткой, тип задачи)
+   — `.deepseek/instructions/project.md`, раздел «Проверка ветки/сессии при старте».
 
-Правила ответа:
-
-- Отвечай по-русски, субагентам тоже передавай требование русского ответа.
-- Выбор между вариантами — только пользователю: один вопрос за раз, зависимые — отдельными сообщениями.
-- Правки только в рабочем коде (`src/` или `game/`) и в `.deepseek/`. `.claude/` не трогать.
-- Документация регистрируется через `.deepseek/agents/librarians/*-librarian-lead.md`, стандарт —
-  `.deepseek/docs/agent-system-workflow.md#doc-standard`.
-- Перед фиксацией решения сверься с ГДД области и с уже принятыми решениями по этой области.
-- Контроль токенов: при входе в пайплайн — `python3 .deepseek/scripts/token_usage_check_dsh.py 3600`,
-  разбор ответа — `.deepseek/instructions/rules.md`, раздел «Контроль расхода токенов» (периодичность —
-  `schedule` dsh; `CronCreate` здесь нет).
+Остальное — по ссылкам, без повторения текста: язык и вопросы — `.deepseek/instructions/project.md`; передача задачи субагенту,
+`ВОПРОСЫ` и синхронность — `.deepseek/instructions/rules.md#subagents`; стандарт документации —
+`.deepseek/docs/agent-system-workflow.md#doc-standard`; контроль токенов — `.deepseek/instructions/rules.md`, раздел «Контроль расхода
+токенов»; правки только в рабочем коде (`src/` или `game/`) и в `.deepseek/`, `.claude/` не трогать —
+`.deepseek/instructions/rules.md`, раздел «Что делать нельзя».
 
 Текущая задача: <описание от пользователя>.

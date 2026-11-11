@@ -38,11 +38,11 @@
 
 `check` показывает `changed` для файла, который изменился в обеих раскладках. Порядок:
 
-1. **Документация** (`docs/`, `memory/`) — сравнивать по смыслу: у кого правка новее и ближе к реальности.
+1. **Документация** (`.deepseek/docs/`, `.deepseek/memory/`) — сравнивать по смыслу: у кого правка новее и ближе к реальности.
    Обе правки полезны — слить вручную в `.claude`, затем `export --force`.
 2. **Агенты и скиллы** — `.claude` считается источником, если у DeepSeek нет отдельной причины (например,
    новый агент, которого в `.claude` нет). Новый агент переносится `import` и получает `.claude`-формат.
-3. **Служебные** (`hooks.json`, `session_state.json`) — доверять дате файла; обычно побеждает Claude Code.
+3. **Служебные** (`.deepseek/hooks.json`, `.deepseek/state/session_state.json`) — доверять дате файла; обычно побеждает Claude Code.
 4. Любой конфликт, который нельзя решить без домысла, — вопрос пользователю (правило проекта).
 
 ## Постоянная работа в DeepSeek
@@ -56,14 +56,14 @@
    `worktrees`).
 4. Скрипты `convert.py`/`selftest.py` оставить: они проверяют целостность (симметрию копий, отсутствие
    ссылок на `.claude` в `.deepseek`-документах).
-5. Ветки `-deepseek` и `MIGRATION.md` — в архив: возврата в Claude Code больше не планируется.
+5. Ветки `-deepseek` и `.deepseek/sync/MIGRATION.md` — в архив: возврата в Claude Code больше не планируется.
 
 ## Когда правило проекта меняется {#правило проекта}
 
-Порядок, чтобы не разошлись три копии (`CLAUDE.md`, `AGENTS.md`, `instructions/`):
+Порядок, чтобы не разошлись три копии (`CLAUDE.md`, `AGENTS.md`, `.deepseek/instructions/`):
 
 1. Claude Code доступен: правка в `CLAUDE.md` -> `export` (обновит `AGENTS.md` и `instructions/project.md`
-   сам). Файл `instructions/rules.md` не дублирует `CLAUDE.md`, а дополняет; правило, общее для обоих
-   движков, живёт в `CLAUDE.md`, специфика DeepSeek — в `instructions/rules.md`.
-2. Claude Code недоступен: правка в `instructions/rules.md` (общее) — при возврате её текст переносится
+   сам). Файл `.deepseek/instructions/rules.md` не дублирует `CLAUDE.md`, а дополняет; правило, общее для обоих
+   движков, живёт в `CLAUDE.md`, специфика DeepSeek — в `.deepseek/instructions/rules.md`.
+2. Claude Code недоступен: правка в `.deepseek/instructions/rules.md` (общее) — при возврате её текст переносится
    в `CLAUDE.md` вручную или через `import` как документ, после чего `export` выравнивает остальное.

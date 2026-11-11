@@ -1,15 +1,33 @@
 # STATE.md — журнал переносов
 
 Свежесть и направление переносов. Верхнюю часть правят руками, строки под `## Журнал` дописывает
-`convert.py`. Расхождение с `drift` — читать последнюю строку и решать по `POLICY.md#конфликты`.
+`convert.py`. Расхождение с `drift` — читать последнюю строку и решать по `.deepseek/sync/POLICY.md#конфликты`.
 
 Текущая раскладка: `.claude` основная, `.deepseek` снимок (режим A).
+## Дедупликация правил 2026-11-11 (правки в `.deepseek` и `CLAUDE.md`, `import` не нужен)
+
+Правила, общие с клиентом, вынесены из `CLAUDE.md` сервера в `../client/CLAUDE.md` — здесь остались
+ссылки и серверные отличия (свой `session_state.json`, ветка `/workspace/server`, скрипт токенов,
+`.deepseek/instructions/*` идентичны клиентским). Полный список правок и что осталось в `.claude` —
+`../client/.deepseek/sync/STATE.md`, раздел «Дедупликация правил 2026-11-11». Дубли в `.claude`
+(запись памяти про русский язык, строка «отвечать по-русски» в 24 агентах, отсутствие якоря
+`#conflict-check`) — осознанная дельта: решение Пользователя 2026-11-11 оставить `.claude` как есть.
+
+
+
+## Правка ссылок 2026-11-11: без переменной WF-папки, от папки инструкций
+
+Ссылки в инструкциях больше не строятся через переменную с корнем WF-папки: они относительные — от папки
+инструкций того репозитория, в котором лежит файл (`../client/...` из серверной папки). Файлы
+`.deepseek/instructions/*` и `.deepseek/sync/*` приведены к этой же базе. Исключения — места, где пути
+перечисляют раскладку дерева, а не адресуют файл: таблица раскладок в `.deepseek/instructions/bridge.md`,
+индекс `.deepseek/README.md` и разделы `.deepseek/sync/CONVERSION.md`.
 
 ## Правки DeepSeek-сессии 2026-11-06 (проведены через `.claude`, `import` не нужен)
 
-- Субагенты: в `instructions/rules.md#subagents` — обязательный шаблон постановки задачи
-  (`АГЕНТ`/`ЗАДАЧА`/`ОБЛАСТЬ`/`ВХОД`/`ВЕРНУТЬ`/`ОБЯЗАТЕЛЬНО`); ссылки на него в `runtime.md#субагенты`,
-  `README.md`, `sync/HAZARDS.md`.
+- Субагенты: в `.deepseek/instructions/rules.md#subagents` — обязательный шаблон постановки задачи
+  (`АГЕНТ`/`ЗАДАЧА`/`ОБЛАСТЬ`/`ВХОД`/`ВЕРНУТЬ`/`ОБЯЗАТЕЛЬНО`); ссылки на него в `runtime.md`, `README.md`,
+  `.deepseek/sync/HAZARDS.md`.
 - Лиды аналитиков (client и server): вызов специалистов и создание нового агента — в терминах dsh
   (`task`, `write`, `edit`, `skill`, `traits`); якоря WF — полным путём; `#conflict-check`, `#resume`,
   `#doc-depth`, `#doc-review` добавлены в WF; `#naming-rules` заменён путём к скиллу `naming`;
@@ -65,3 +83,10 @@
 | 2026-11-06 11:21:14 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
 | 2026-11-06 11:22:08 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
 | 2026-11-09 12:29:10 +0700 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
+| 2026-11-11 04:28:16 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
+| 2026-11-11 04:47:38 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
+| 2026-11-11 04:50:04 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
+| 2026-11-11 04:50:29 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
+| 2026-11-11 04:50:43 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
+| 2026-11-11 05:21:13 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |
+| 2026-11-11 05:24:21 +0000 | export | снимок .claude -> .deepseek | {"agents": 32, "skills": 1, "docs": 27, "memory": 0} |

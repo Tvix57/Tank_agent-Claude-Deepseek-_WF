@@ -1,7 +1,7 @@
 # CONVERSION.md — спецификация конвертера `.claude` ↔ `.deepseek`
 
-Источник истины для поведения `scripts/convert.py`. Меняется вместе со скриптом; расхождение текста и
-кода — баг, его ловит `scripts/selftest.py`.
+Источник истины для поведения `.deepseek/scripts/convert.py`. Меняется вместе со скриптом; расхождение текста и
+кода — баг, его ловит `.deepseek/scripts/selftest.py`.
 
 ## Команды
 
@@ -69,17 +69,17 @@ AGENTS.md
 (-> `state/session_state.json`), `scripts/*.py` (копии, кроме конвертера).
 
 Не конвертируется: `checkpoints/`, `worktrees/`, `exports/`, `mailbox/`, `agent-registry.json`,
-`first-run`, `assistant-daemon-state.json`, `__pycache__`, `docs/game-design/incoming/`.
+`first-run`, `assistant-daemon-state.json`, `__pycache__`, `.deepseek/docs/game-design/incoming/`.
 
 ## Ручные и генерируемые
 
-Генерируемые несут `<!-- GENERATED` в первых 4000 байт: `AGENTS.md` и `CLAUDE.ds.md` в корне,
-`instructions/project.md`, `agents/`, `skills/`, `docs/`, `memory/`, `hooks.json`,
-`state/session_state.json`, `scripts/*` (копии). `schema.yml` и строки журнала `sync/STATE.md` пишет
+Генерируемые несут `<!-- GENERATED` в первых 4000 байт: `AGENTS.md` и `.deepseek/CLAUDE.ds.md` в корне,
+`.deepseek/instructions/project.md`, `.deepseek/agents/`, `.deepseek/skills/`, `.deepseek/docs/`, `.deepseek/memory/`, `.deepseek/hooks.json`,
+`.deepseek/state/session_state.json`, `scripts/*` (копии). `.deepseek/schema.yml` и строки журнала `.deepseek/sync/STATE.md` пишет
 конвертер, заголовка у них нет.
 
 Ручные не перезаписываются никогда: `README.md`, `instructions/{bridge,contracts,rules,runtime,invariants,checkpoint}.md`,
-`sync/*.md`, `scripts/convert.py`, `scripts/selftest.py`, `notes/`, `agent-memory-local/`.
+`sync/*.md`, `.deepseek/scripts/convert.py`, `.deepseek/scripts/selftest.py`, `notes/`, `agent-memory-local/`.
 
 Если ручной файл получил заголовок `<!-- GENERATED`, `drift` сообщает о поломке; файл восстанавливается из git.
 
@@ -105,7 +105,7 @@ experimental: {cacheTtl: 1h}                        # experimental не пере
 - Тело: `](.../.claude/...)` -> `](.../.deepseek/...)`, `#gdd-x` -> `gdd-x`, `agent-system-workflow.md` ->
   `.deepseek/docs/agent-system-workflow.md`.
 - `.claude/agents/**/.claude/agent-memory-local/**` -> `.deepseek/agent-memory-local/**` без вложенного `.claude`.
-- Файлы, имя которых начинается с `_` (`agents/_TEMPLATE.md`), конвертер не трогает в обе стороны:
+- Файлы, имя которых начинается с `_` (`.deepseek/agents/_TEMPLATE.md`), конвертер не трогает в обе стороны:
   это шаблоны. Новый агент копируется из шаблона под рабочим именем.
 
 Обратное (`import`) — создаёт в `.claude` агентов, которых там ещё нет (из `.deepseek/agents/**` в
@@ -143,7 +143,7 @@ metadata:                                                   type: feedback
 - `name` = имя файла с `_`: по нему `import` узнаёт файл, который уже был в `.claude`, и не пересобирает его.
 - `schema: 1` — маркер формата DeepSeek; файл без него при `import` считается новым и собирается в YAML.
 - `MEMORY.md` — индекс переписывается (`./../docs/x` -> `.deepseek/docs/x`, `./x.md` -> `.deepseek/memory/x.md`);
-  копия индекса целиком лежит в `memory/INDEX.md` — её читает человек в браузере.
+  копия индекса целиком лежит в `.deepseek/memory/INDEX.md` — её читает человек в браузере.
 - `import`: файл со `schema: 1` собирается обратно в YAML `.claude` (добавляется `converted-from`, если был
   `source`); расхождение с существующим файлом без `--force` не перезаписывается и попадает в отчёт.
 
@@ -157,16 +157,16 @@ metadata:                                                   type: feedback
 
 ## Служебное
 
-- `hooks.json`: `{"schema": 1, "events": [{"event": "pre_compact", "matcher": "auto", "type": "command",
+- `.deepseek/hooks.json`: `{"schema": 1, "events": [{"event": "pre_compact", "matcher": "auto", "type": "command",
   "command": "…"}]}`; обратно — группировка по `matcher` в формат `settings.local.json`.
-- `state/session_state.json` — копия; `import` возвращает `lastBranch`.
-- `schema.yml` — версия схемы и дата последнего экспорта.
-- `sync/STATE.md` — журнал; его дописывают все команды, верхнюю часть правят руками.
+- `.deepseek/state/session_state.json` — копия; `import` возвращает `lastBranch`.
+- `.deepseek/schema.yml` — версия схемы и дата последнего экспорта.
+- `.deepseek/sync/STATE.md` — журнал; его дописывают все команды, верхнюю часть правят руками.
 
 ## Чего конвертер не делает
 
 - Не переносит `.claude/exports/` (бэклоги, черновики) и `.claude/worktrees/`.
 - Не меняет код (`src/`, `game/`) и ссылки на документацию в коде.
 - Не разрешает конфликты содержательно: «changed» — сигнал, кому верить; решает человек или агент по
-  `POLICY.md#конфликты`.
+  `.deepseek/sync/POLICY.md#конфликты`.
 

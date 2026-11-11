@@ -7,14 +7,14 @@
 |---|---|---|---|
 | 1 | `.claude/` не содержит ссылок на `.deepseek` | иначе Claude Code читает чужую раскладку и путает источники | `selftest.py`, `drift` |
 | 2 | Ручные файлы (`README.md`, `instructions/*` кроме `project.md`, `sync/*.md`) на месте и не несут `<!-- GENERATED` в начале строки | заголовок = файл можно перезаписать; упоминание в обратных кавычках не считается | `selftest.py`, `drift` |
-| 3 | Генерируемые файлы на месте: `CLAUDE.ds.md`, `instructions/project.md`, `schema.yml` (со `schema: 1`) | по ним dsh узнаёт раскладку и правила | `selftest.py`, `drift` |
+| 3 | Генерируемые файлы на месте: `.deepseek/CLAUDE.ds.md`, `.deepseek/instructions/project.md`, `.deepseek/schema.yml` (со `schema: 1`) | по ним dsh узнаёт раскладку и правила | `selftest.py`, `drift` |
 | 4 | Каждый `.claude/agents/**/*.md` имеет пару в `.deepseek/agents/**` (или `agent-memory-local/`) | потерянный агент = сломанный пайплайн | `selftest.py`, `check` |
 | 5 | Каждый `.claude/docs/*.md` (кроме `incoming/`) имеет пару в `.deepseek/docs/` | документация области должна открываться в DeepSeek | `selftest.py`, `check` |
 | 6 | `AGENTS.md` содержит шапку «правила проекта» и блок `dz:bridge` | dsh читает `AGENTS.md`, Claude Code — `CLAUDE.md`; блок держит связь | `selftest.py`, `drift` |
-| 7 | `instructions/bridge.md` содержит все имена инструментов (`read`,`bash`,`write`,`edit`,`task`,`skill`,`grep`,`glob`,`web_search`,`web_fetch`,`message`) | иначе агенты потеряют инструмент при конвертации | `selftest.py` |
+| 7 | `.deepseek/instructions/bridge.md` содержит все имена инструментов (`read`,`bash`,`write`,`edit`,`task`,`skill`,`grep`,`glob`,`web_search`,`web_fetch`,`message`) | иначе агенты потеряют инструмент при конвертации | `selftest.py` |
 | 8 | `convert.py` и `selftest.py` в `client` и `server` байт-идентичны | разошлись копии — конвертация в одном репозитории даёт другой результат | `selftest.py` (сравнивает оба дерева) |
-| 9 | `schema.yml` — `schema: 1`; иное — ручное вмешательство в формат | версия схемы меняется осознанно и вместе с конвертером | `selftest.py` |
-| 10 | `sync/STATE.md` содержит строку `export`/`import` с датой | без журнала не понять, какой снимок новее | `selftest.py` |
+| 9 | `.deepseek/schema.yml` — `schema: 1`; иное — ручное вмешательство в формат | версия схемы меняется осознанно и вместе с конвертером | `selftest.py` |
+| 10 | `.deepseek/sync/STATE.md` содержит строку `export`/`import` с датой | без журнала не понять, какой снимок новее | `selftest.py` |
 | 11 | В агентах и скиллах `.deepseek` нет ссылок `](.claude/...)` | иначе dsh-агент открывает несуществующий путь | `selftest.py` |
 | 12 | `.git/info/exclude` содержит `.deepseek/` и `AGENTS.md` | контур — служебные файлы, как `.claude` и `CLAUDE.md`; иначе снимок висит в `git status` и уезжает в чужие коммиты | `selftest.py` |
 | 13 | Скрипты контура компилируются, а `token_usage_check_dsh.py` на синтетическом журнале dsh даёт ожидаемые числа | скрипт контроля токенов — единственная метрика в DeepSeek-режиме; молчаливая поломка парсинга выглядела бы как «всё в норме» | `selftest.py` |
@@ -30,4 +30,4 @@
 
 Инвариант можно расширять: новый пункт — проверка в `selftest.py` (если механическая) и строка здесь.
 То, что проверяется только суждением (кому верить в конфликте, можно ли работать в `.claude`),
-живёт в `POLICY.md` и `HAZARDS.md`, а не здесь.
+живёт в `.deepseek/sync/POLICY.md` и `.deepseek/sync/HAZARDS.md`, а не здесь.

@@ -214,6 +214,9 @@ class Out:
 TOKEN_LINK = re.compile(r"\]\((\.[^)\s]*)\)")
 PATH_DZ = re.compile(r"(?<![\w.-])\.claude/")
 PATH_CLAUDE = re.compile(r"(?<![\w.-])\.deepseek/")
+# `session_state.json` в `.deepseek` лежит в подкаталоге `state/`: общий префикс даёт неверный путь.
+STATE_DZ = re.compile(r"(?<![\w.-])\.deepseek/(?:state/)?session_state\.json")
+STATE_CLAUDE = re.compile(r"(?<![\w.-])\.claude/(?:state/)?session_state\.json")
 PATH_WF_DZ = re.compile(r"((?:/|\.)?)\.claude/docs/agent-system-workflow\.md")
 PATH_WF_CLAUDE = re.compile(r"((?:/|\.)?)\.deepseek/docs/agent-system-workflow\.md")
 # Ссылка на правило ГДД: внутри `код`, в [[вики-ссылке]] или в markdown-ссылке. Заголовки (# ‹gdd-x›,
@@ -242,6 +245,7 @@ def claude_to_dz(text):
     text = PATH_WF_DZ.sub(r"\1.deepseek/docs/agent-system-workflow.md", text)
     text = TOKEN_LINK.sub(lambda m: "](" + swap_paths(m.group(1), ".claude", ".deepseek") + ")", text)
     text = PATH_DZ.sub(".deepseek/", text)
+    text = STATE_DZ.sub(".deepseek/state/session_state.json", text)
     text = BG_DZ.sub("результат нужен до твоего ответа, поэтому дождись его, а не\n"
                      "передавай работу в фон.", text)
     text = BG_CLAUDE.sub("ответе несколькими вызовами, но тоже синхронно.", text)
@@ -254,6 +258,7 @@ def dz_to_claude(text):
     text = PATH_WF_CLAUDE.sub(r"\1.claude/docs/agent-system-workflow.md", text)
     text = TOKEN_LINK.sub(lambda m: "](" + swap_paths(m.group(1), ".deepseek", ".claude") + ")", text)
     text = PATH_CLAUDE.sub(".claude/", text)
+    text = STATE_CLAUDE.sub(".claude/session_state.json", text)
     text = AGENT_TOOL_CLAUDE.sub("Agent tool", text)
     text = SUBAGENT_TYPE_CLAUDE.sub("`subagent_type`", text)
     return GDD_CLAUDE.sub("#", text)

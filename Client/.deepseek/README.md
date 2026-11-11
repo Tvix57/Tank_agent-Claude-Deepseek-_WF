@@ -82,8 +82,9 @@ git diff --stat .claude && git commit -m "docs: перенос изменени�
 
 - `instructions/bridge.md` — карта соответствия раскладок, инструментов, моделей и команд.
 - `instructions/contracts.md` — что DeepSeek соблюдает поверх `AGENTS.md`: память, документация, субагенты, скиллы.
-- `instructions/rules.md` — правила для всех сессий (язык, вопросы, противоречия, субагенты); шаблон
-  постановки задачи субагенту — `instructions/rules.md#subagents`.
+- `instructions/rules.md` — DeepSeek-часть правил: субагенты, скиллы, память, токены, запреты; правила
+  проекта — в `instructions/project.md`, отсюда только ссылки. Шаблон постановки задачи субагенту —
+  `instructions/rules.md#subagents`.
 - `instructions/runtime.md` — старт сессии dsh, модели, инструменты, хуки, ограничения.
 - `instructions/checkpoint.md` — первое сообщение в сессии.
 - `instructions/project.md` — правила проекта в терминах `.deepseek` (генерируется).

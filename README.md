@@ -15,8 +15,8 @@
 
 - **Контейнер**: `.devcontainer/docker-compose.yml` монтирует эту папку как `/wf`, `.devcontainer/devcontainer.json`
   задаёт `containerEnv: WF_ROOT=/wf`. В рабочих каталогах `/workspace/client` и `/workspace/server`
-  `CLAUDE.md`, `AGENTS.md`, `.claude`, `.deepseek` — симлинки на `$WF_ROOT/Client` и `$WF_ROOT/Server`.
-- **macOS (хост)**: `export WF_ROOT="/Users/dmitry/Tank_agent-Claude-Deepseek-_WF"` в `~/.zshrc`. Симлинки в
+  `CLAUDE.md`, `AGENTS.md`, `.claude`, `.deepseek` — симлинки на подпапки `Client` и `Server` этой папки.
+- **macOS (хост)**: `export WF_ROOT="<абсолютный путь к этой папке>"` в `~/.zshrc`. Симлинки в
   рабочих каталогах ведут на `/wf/...`, поэтому на хосте они висят — правки идут через контейнер.
 
 Исключения инструкций из гита рабочих каталогов дописывает тот же `tools/link_workspaces.py` — в
@@ -27,7 +27,8 @@
 
 ## Правка правил
 
-1. Общие правила — `$WF_ROOT/<Client|Server>/CLAUDE.md`; специфика DeepSeek — `.deepseek/instructions/rules.md`.
+1. Общие правила — `CLAUDE.md` в папке инструкций репозитория (`Client/` для клиента, `Server/` для сервера);
+   специфика DeepSeek — `.deepseek/instructions/rules.md`.
 2. `python3 .deepseek/scripts/convert.py export` (из рабочего каталога проекта) — обновляет `AGENTS.md`,
    `.deepseek/instructions/project.md`, `CLAUDE.ds.md` и зеркало.
 3. `python3 .deepseek/scripts/convert.py check` — `changed 0, missing 0`; `python3 .deepseek/scripts/selftest.py`
@@ -36,8 +37,10 @@
 ## Если ссылки потерялись (переклонировали рабочие каталоги)
 
 ```bash
-python3 "$WF_ROOT/tools/link_workspaces.py" --workdir /Users/dmitry/Documents/Tanks
+python3 tools/link_workspaces.py --workdir <рабочий каталог проекта>
 ```
+
+(запускать из этой папки инструкций; скрипту нужен путь к рабочему каталогу проекта)
 
 Скрипт идемпотентен: существующие ссылки не трогает, обычные файлы складывает в
 `<workdir>/.wf-backup/repo-files-<дата>/` перед заменой, недостающие исключения дописывает в
