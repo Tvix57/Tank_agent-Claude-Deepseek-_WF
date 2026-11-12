@@ -73,3 +73,8 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# мусор ОС и байткод Python: под гитом только исходники инструкций
+.DS_Store
+__pycache__/
+*.pyc
