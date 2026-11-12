@@ -37,8 +37,8 @@ model/generals/GeneralsUserComponent  extends UserChildComponent implements APIR
 model/generals/GeneralPosition        enum: 8 должностей: древо + индексы слотов (1 у командной, 0..3 у Штаба)
 model/generals/GeneralTree            enum: TANK, AIRPLANE — древо техники
 model/generals/GeneralInfluenceParam  enum: DAMAGE, ARMOR — параметр и одновременно слот умения
-model/generals/GeneralInfluence       enum: 22 типа влияния (древо + параметр + объект), разбор ячейки баланса
-model/generals/GeneralSkillAcquisition enum: BASE, ADDITIONAL — как навык попадает к генералу
+model/generals/GeneralInfluence       enum: 22 типа влияния (древо + параметр + объект)
+model/generals/GeneralSkillType       enum: BASE, ADDITIONAL — как навык попадает к генералу
 model/generals/GeneralSkill           умение генерала: id навыка + звёзды; процент = величина + шаги звёзд
 model/generals/data/GeneralData       строка листа Generals
 model/generals/data/GeneralSkillData  строка листа GeneralSkills
@@ -106,22 +106,24 @@ model/lootbox/data/AbilityReward      награда «умение»
 | Индекс | Колонка | Значение |
 |---|---|---|
 | 0 | `Id` | идентификатор навыка |
-| 1 | `Type` | ordinal `GeneralSkillAcquisition`: 0 — Base, 1 — Additional |
-| 2 | `TypeName` | `Base` / `Additional` (приоритет над `Type`) |
-| 3 | `ImpactTechType` | ordinal `GeneralTree`: 0 — TANK |
-| 4 | `ImpactTechType` | имя древа `TANK` / `AIRPLANE` (приоритет над ordinal) |
+| 1 | `Type` | ordinal `GeneralSkillType`: 0 — Base, 1 — Additional |
+| 2 | `TypeName` | подпись `Base` / `Additional` — не читается |
+| 3 | `ImpactTechType` | ordinal `GeneralTree`: 0 — TANK, 1 — AIRPLANE |
+| 4 | `ImpactTechType` | имя древа `TANK` / `AIRPLANE` — не читается |
 | 5 | `ImpactTechSpecType` | ordinal `TankType` / `AirplaneType`; `-1` — вся техника древа |
 | 6 | `ImpactTechSpecTypeName` | название типа техники (`Все`, `Легкий`, …) — не читается |
 | 7 | `ImpactType` | ordinal `GeneralInfluenceParam`: 0 — DAMAGE, 1 — ARMOR |
-| 8 | `ImpactTypeName` | `DAMAGE_INCREASE` / `ARMOR_INCREASE` (приоритет над ordinal) |
+| 8 | `ImpactTypeName` | подпись `DAMAGE_INCREASE` / `ARMOR_INCREASE` — не читается |
 | 9 | `ImpactValue` | величина влияния, %; дробная часть с запятой (`4,0000`) |
 | 10 | `SilverPrice` | цена продажи умения, серебро; колонки нет → 10 |
 | 11 | `Chance` | вес выпадения умения; колонки нет → 1 (навыки равновероятны) |
 
 `ImpactTechType` — на какую технику действует бонус (древо), `ImpactType` — сам параметр (урон или
-прочность); пары 3/4 и 7/8 — ordinal и имя одного параметра, имя приоритетнее. Тип влияния собирается из трёх
-колонок — древа (3/4), объекта (5) и параметра (7/8) — `GeneralInfluence.of(...)`. Названия навыка в таблице
-нет: подпись собирает клиент из типа влияния и `value`.
+прочность). Код читает только машинные ordinal-колонки 1, 3, 5, 7; пары «ordinal + подпись» (2, 4, 6, 8)
+существуют для читаемости таблицы и не разбираются. Тип влияния собирается из трёх колонок — древа (3),
+объекта (5) и параметра (7) — `GeneralInfluence.of(...)`; неизвестный ordinal любого из типов останавливает
+импорт с ошибкой, где перечислены значения колонок строки. Названия навыка в таблице нет: подпись собирает
+клиент из типа влияния и `value`.
 
 Лист `Generals` (`GeneralData`):
 
@@ -220,7 +222,7 @@ team.add(position, tankCopy);
   `slot`, `tree`, `rank`, `stars`, `power`, `damagePercent`, `armorPercent`, `baseSkills` (`skillId`,
   `influence`, `percent`) и `skills` — additional-умения (`skillId`, `influence`, `stars`, `steps`, `percent`).
 - Справочник `/info` (`GeneralsData.apiResponse()`): `positions` (`ordinal`, `airplane`, `slots`) и `skills`
-  (`id`, `acquisition`, `influence`, `value`, `silverPrice`).
+  (`id`, `type`, `influence`, `value`, `silverPrice`).
 - Награды сундука: у ресурса — `itemType`, `id`, `min`, `max`; у генерала — `itemType`, `receivedGeneral`,
   `slotGeneral`; у умения — `ability` (признак варианта в справочнике) и поля `AbilityReward.addTo` выше.
 
@@ -280,8 +282,8 @@ team.add(position, tankCopy);
 | `model/generals/GeneralPosition.java` | enum должностей: древо и индексы слотов, `toSlotKey`/`bySlotKey` |
 | `model/generals/GeneralTree.java` | enum древа: танки / авиация |
 | `model/generals/GeneralInfluenceParam.java` | enum параметра и слота умения: урон / прочность |
-| `model/generals/GeneralInfluence.java` | 22 типа влияния, разбор ячейки баланса |
-| `model/generals/GeneralSkillAcquisition.java` | тип получения навыка: Base / Additional |
+| `model/generals/GeneralInfluence.java` | 22 типа влияния, `of` — сборка из ordinal-колонок листа |
+| `model/generals/GeneralSkillType.java` | тип навыка: Base / Additional |
 | `model/generals/GeneralSkill.java` | умение генерала: id навыка, звёзды, процент |
 | `model/generals/data/GeneralData.java` | строка листа `Generals` |
 | `model/generals/data/GeneralSkillData.java` | строка листа `GeneralSkills` |
